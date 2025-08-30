@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+summaries.txt
+.env
