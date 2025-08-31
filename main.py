@@ -8,10 +8,15 @@ summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 
 # Extract title and main content
 def extract_text(soup):
-    # This function can be customized based on the website structure
-    paragraphs = soup.find_all('p')
-    text = '\n'.join(p.get_text() for p in paragraphs)
-    return text
+    text = []
+    for tag in soup.find_all(['h1', 'h2', 'p']):
+        if tag.name == 'h1':
+            text.append(f"\nTitle: {tag.get_text(strip=True)}\n")
+        elif tag.name == 'h2':
+            text.append(f"\nSubtitle: {tag.get_text(strip=True)}\n")
+        elif tag.name == 'p' and tag.find_parent('footer') is None:
+            text.append(tag.get_text())
+    return '\n'.join(text)
 
 
 # Break text into chunks if too long for the model
@@ -55,7 +60,6 @@ headers = {
 }
 response = requests.get(url, headers=headers)
 soup = BeautifulSoup(response.content, 'html.parser')
-
 website_text = extract_text(soup)
 website_text_chunks = chunk_text(website_text)
 chunk_summaries = []
