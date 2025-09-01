@@ -6,7 +6,7 @@ A simple AI Summarizer that takes an article's URL, extracts the main content, a
 
 - Extracts article text from any URL with `<p>` tags
 - Summarizes long articles using a state-of-the-art AI model
-- Saves summaries to a text file for later review
+- Saves summaries to a markdown file for later review
 
 ## Installation
 
@@ -24,4 +24,4 @@ Run the script and paste a news article URL when prompted:
 python main.py
 ```
 
-The summary will be saved to `summaries.txt`.
+The summary will be saved to `summaries.md`.
