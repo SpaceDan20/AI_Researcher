@@ -1,4 +1,4 @@
 __pycache__/
 *.pyc
-summaries.txt
+summaries.md
 .env
