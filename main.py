@@ -43,6 +43,7 @@ def chunk_text(text, max_tokens=400):
             current_chunk = test_chunk
     if current_chunk:
         chunks.append(current_chunk.strip())
+    print(f"Created {len(chunks)} chunks.")
     return chunks
 
 
@@ -82,7 +83,8 @@ soup = BeautifulSoup(response.content, 'html.parser')
 website_text = extract_text(soup) # Extract relevant text from HTML
 website_text_chunks = chunk_text(website_text)
 chunk_summaries = [] # Create list of summaries for each chunk
-for chunk in website_text_chunks:
+for num, chunk in enumerate(website_text_chunks):
+    print(f"Summarizing chunk {num+1}/{len(website_text_chunks)}")
     chunk_summary = summarize_text(chunk)
     if chunk_summary:
         chunk_summaries.append(chunk_summary)
@@ -94,8 +96,8 @@ total_summary_text = split_into_paragraphs(total_summary, 4)
 with open("summaries.md", "a", encoding="utf-8") as f:
     f.write(f"\nURL: {url}\n")
     f.write(f"Total Summary:\n{total_summary_text}")
-print("\nSummarization complete. Check summaries.md for results.\n")
+print("\nSummarization complete. Check summaries.md.\n")
 
+#TODO: Add final summarization (multi-summarization)
 #TODO: Build a simple UI using Streamlit
-#TODO: Polish summarization and sentence chunking
 #TODO: Add error handling
